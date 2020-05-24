@@ -101,6 +101,79 @@ twenty_colors.all_in_dataframe()
 ```
 
 ### 2. Using a CLI terminal:
+In a command line terminal, move to `rgb_hex_hsl_generator` folder location on your system.
+```commandline
+C:\users\xyz\Desktop> cd rgb_hex_hsl_generator
 
+C:\users\xyz\Desktop\rgb_hex_hsl_generator> 
+```
+Run the script file `rgb_hex_hsl_generator.py` as shown below:
+```commandline
+C:\users\xyz\Desktop\rgb_hex_hsl_generator> python rgb_hex_hsl_generator.py
+```
+It will install all the required libraries and then prompt you to enter a value for the number of colors you are interested in:
+```commandline
+C:\users\xyz\Desktop\rgb_hex_hsl_generator> python rgb_hex_hsl_generator.py
+Requirement already satisfied: numpy==1.18.4 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 1)) (1.18.4)
+Requirement already satisfied: pandas==1.0.3 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 2)) (1.0.3)
+Requirement already satisfied: python-dateutil==2.8.1 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 3)) (2.8.1)
+Requirement already satisfied: pytz==2020.1 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 4)) (2020.1)
+Requirement already satisfied: six==1.15.0 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 5)) (1.15.0)
+Number of colors to generate:
+```
+Say, you are interested in generating 10 colors:
+```commandline
+Number of colors to generate: 10
+```
+You will now see the options to choose the format you are interested to get color codes.
+```commandline
+Available formats:
+        rgb_0_255   RGB values on a 0 to 255 scale (68, 125, 220)
+        rgb_0_1     RGB values on a 0.0 to 1.0 scale (0.257, 0.745, 0.947)
+        hex_code    Hexa decimal values (#B2E591)
+        hsl_code    Hue Saturation Luminance values (45, 97, 58)
+
+Format you want (rgb_0_255, rgb_0,1, hex_code, hsl_code, all):
+```
+Say, you want hex_code:
+```commandline
+Format you want (rgb_0_255, rgb_0,1, hex_code, hsl_code, all): hex_code
+```
+You will now see the output and the program terminates:
+```commandline
+====================== HEX ======================
+['#FE1DB6', '#2D791D', '#D3E3F2', '#2134AE', '#6A0890', '#EB62E0', '#8E234F', '#59E9C2', '#11B2BB', '#7097CC']
+
+C:\users\xyz\Desktop\rgb_hex_hsl_generator>
+```
+
+Here is an example if you want to see the color codes in all formats: 
+```commandline
+C:\users\xyz\Desktop\rgb_hex_hsl_generator>python rgb_hex_hsl_generator.py
+Requirement already satisfied: numpy==1.18.4 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 1)) (1.18.4)
+Requirement already satisfied: pandas==1.0.3 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 2)) (1.0.3)
+Requirement already satisfied: python-dateutil==2.8.1 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 3)) (2.8.1)
+Requirement already satisfied: pytz==2020.1 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 4)) (2020.1)
+Requirement already satisfied: six==1.15.0 in c:\users\xyz\desktop\rgb_hex_hsl_generator\venv\lib\site-packages (from -r requirements.txt (line 5)) (1.15.0)
+Number of colors to generate: 10
+Available formats:
+        rgb_0_255   RGB values on a 0 to 255 scale (68, 125, 220)
+        rgb_0_1     RGB values on a 0.0 to 1.0 scale (0.257, 0.745, 0.947)
+        hex_code    Hexa decimal values (#B2E591)
+        hsl_code    Hue Saturation Luminance values (45, 97, 58)
+
+Format you want (rgb_0_255, rgb_0,1, hex_code, hsl_code, all): all
+====================== RGB (0 - 255) ======================
+[(205, 179, 135), (26, 87, 79), (68, 98, 49), (148, 111, 56), (108, 34, 149), (153, 213, 215), (183, 77, 28), (220, 155, 196), (99, 49, 18), (52, 242, 47)]
+====================== RGB (0.0 - 1.0) ======================
+[(0.80392, 0.70196, 0.52941), (0.10196, 0.34118, 0.3098), (0.26667, 0.38431, 0.19216), (0.58039, 0.43529, 0.21961), (0.42353, 0.13333, 0.58431), (0.6, 0.83529, 0.84314), (0.71765, 0.30196,
+0.1098), (0.86275, 0.60784, 0.76863), (0.38824, 0.19216, 0.07059), (0.20392, 0.94902, 0.18431)]
+====================== HEX ======================
+['#CDB387', '#1A574F', '#446231', '#946F38', '#6C2295', '#99D5D7', '#B74D1C', '#DC9BC4', '#633112', '#34F22F']
+====================== HSL ======================
+[(38, 41, 67), (172, 54, 22), (97, 33, 29), (36, 45, 40), (279, 63, 36), (182, 44, 72), (19, 73, 41), (322, 48, 74), (23, 69, 23), (118, 88, 57)]
+
+C:\users\xyz\Desktop\rgb_hex_hsl_generator>
+```
 
 
