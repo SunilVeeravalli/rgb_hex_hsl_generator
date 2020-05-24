@@ -14,8 +14,33 @@ class ColorCodesGenerator:
         self.n_colors = n_colors
         self.__rgb_0_255_list = None
         self.__rgb_0_1_list = []
+        self.__hex_codes_list = []
+        self.__hsl_codes_list = []
+    
+    @staticmethod
+    def suffix_0s(value: str = None) -> str:
+        '''
+        Suffixes a single character hexa decimal value with 0.
         
-    def rgb_0_255(self):
+        Parameter
+        =========
+        value = a string
+            the character length should be 1. The value should be between 0-9, A-F
+        
+        Returns
+        =======
+        Returns a string of character length of 2.
+        Example:
+            if value = '0', the output will be '00'
+            if value = 'a', the output will be '0A'
+        '''
+        
+        if len(value) < 2:
+            return '0' + value
+        else:
+            return value
+        
+    def rgb_0_255(self) -> list:
         '''
         Generates rgb colors in range 0 to 255.
         
@@ -54,7 +79,7 @@ class ColorCodesGenerator:
         
         return self.__rgb_0_255_list
 
-    def rgb_0_1(self):
+    def rgb_0_1(self) -> list:
         '''
         Converts the values in __rgb_0_255_list from range 0 to 255 to 0.0 to 1.0
 
@@ -71,7 +96,7 @@ class ColorCodesGenerator:
         
         return self.__rgb_0_1_list
 
-    def hex_codes(self):
+    def hex_codes(self) -> list:
         '''
         Converts the values in __rgb_0_255_list from range 0 to 255 to hexa decimal system
         
@@ -80,9 +105,81 @@ class ColorCodesGenerator:
         Returns a list of strings.
         Example:
             if __rgb_0_255_list = [(23, 100, 79), (78, 25, 14)], then the output will be:
-            ['#', '#']
+            ['#'17644F, '#4E190E']
         '''
+        for r, g, b in self.__rgb_0_255_list:
+            hex_code = '#' + \
+                       self.suffix_0s(value = str(hex(r)[-2:])) + \
+                       self.suffix_0s(value = str(hex(g)[-2:])) + \
+                       self.suffix_0s(value = str(hex(b)[-2:]))
+            self.__hex_codes_list.append(hex_code.upper())
+
+        return self.__hex_codes_list
+    
+    def hsl_codes(self) -> list:
+        '''
+        Converts the values in __rgb_0_255_list to HSL values (Hue, Saturation, Luminance)
         
+        Returns
+        =======
+        Returns a list of tuples where each tuple contain values for Hues, Saturation and Luminance
+        Example:
+            if __rgb_0_255_list = [(23, 100, 79)], then the output will be:
+            [(23/255), (100/255), (79/255)] = [(0.09019, 0.39215, 0.30980)]
+            vmin = min(0.09019, 0.39215, 0.30980) = 0.09019
+            vmax = max(0.09019, 0.39215, 0.30980) = 0.39215
+            luminance = (vmin + vmax)/2 = (0.09019 + 0.39215)/2 = 0.24117 = 24%
+            
+            if (vmin == vmax), then saturation = 0%
+            if (vmin != vmax) and (luminance is <= 0.5), then saturation = (vmax - vmin)/(vmax + vmin)
+            if (vmin != vmax) and (luminance is > 0.5), then saturation = (vmax - vmin)/(2.0 - vmax - vmin)
+            saturation = (vmax - vmin)/(vmax + vmin) = (0.39215 - 0.09019)/(0.39215 + 0.09019) = 0.62603 = 63%
+            
+            if red is max, then hue = (green - blue)/(vmax - vmin)
+            if green is max, then hue = 2.0 + ((blue - red)/(vmax - vmin))
+            if blue is max, then hue = 4.0 + ((red - green)/(vmax - vmin))
+            In our case, green is max. So, hue = 2.0 + ((0.30980 - 0.09019)/(0.39215 - 0.09019)) = 2.72728
+            if hue is positive, then hue = hue * 60
+            if hue is negative, then hue = (hue * 60) + 360
+            hue = 2.72728 * 60 = 163.6368 = 164 degrees
+            
+            So, hsl values = [(164, 63, 24)]
+        '''
+        if not self.__rgb_0_1_list:
+            self.rgb_0_1()
+
+        for r, g, b in self.__rgb_0_1_list:
+            # Calculating luminance
+            vmin = min(r, g, b)
+            vmax = max(r, g, b)
+            luminance = (vmin + vmax) / 2
+            
+            # Calculating saturation
+            if luminance <= 0.5:
+                saturation = (vmax - vmin)/(vmax + vmin)
+            else:
+                saturation = (vmax - vmin)/(2.0 - vmax - vmin)
+            
+            # Calculating hue
+            if r == vmax:
+                hue = (g - b)/(vmax - vmin)
+            elif g == vmax:
+                hue = 2.0 + ((b - r)/(vmax - vmin))
+            else:
+                hue = 4.0 + ((r - g)/(vmax - vmin))
+            
+            if hue >= 0:
+                hue *= 60
+            else:
+                hue = (hue * 60) + 360
+            
+            h = int(round(hue, 0))
+            s = int(round(saturation * 100, 0))
+            l = int(round(luminance * 100, 0))
+            
+            self.__hsl_codes_list.append((h, s, l))
+            
+        return self.__hsl_codes_list
 
 
 
@@ -91,5 +188,10 @@ class ColorCodesGenerator:
 x = ColorCodesGenerator(n_colors = 3)
 x.rgb_0_255()
 x.rgb_0_1()
+x.hex_codes()
+x.hsl_codes()
+
 y = ColorCodesGenerator(n_colors = 3)
 y.rgb_0_255()
+y.hex_codes()
+y.hsl_codes()
