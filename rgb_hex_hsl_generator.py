@@ -51,6 +51,7 @@ class ColorCodesGenerator:
         """
         Returns one random integer between 0 and 255
         """
+        # randint() from random library will also work instead of numpy's randint()
         return np.random.randint(low = 0, high = 255, size = 1).tolist().pop()
     
     def rgb_0_255(self) -> list:
